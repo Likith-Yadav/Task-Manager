@@ -19,3 +19,52 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Calendar Styles */
+.task-calendar {
+  --fc-border-color: theme('colors.gray.200');
+  --fc-button-text-color: theme('colors.gray.700');
+  --fc-button-bg-color: theme('colors.white');
+  --fc-button-border-color: theme('colors.gray.300');
+  --fc-button-hover-bg-color: theme('colors.gray.100');
+  --fc-button-hover-border-color: theme('colors.gray.400');
+  --fc-button-active-bg-color: theme('colors.gray.200');
+  --fc-button-active-border-color: theme('colors.gray.500');
+}
+
+.dark .task-calendar {
+  --fc-border-color: theme('colors.gray.700');
+  --fc-button-text-color: theme('colors.gray.300');
+  --fc-button-bg-color: theme('colors.gray.800');
+  --fc-button-border-color: theme('colors.gray.600');
+  --fc-button-hover-bg-color: theme('colors.gray.700');
+  --fc-button-hover-border-color: theme('colors.gray.500');
+  --fc-button-active-bg-color: theme('colors.gray.600');
+  --fc-button-active-border-color: theme('colors.gray.400');
+  --fc-page-bg-color: theme('colors.gray.800');
+  --fc-neutral-bg-color: theme('colors.gray.800');
+  --fc-neutral-text-color: theme('colors.gray.300');
+  --fc-today-bg-color: theme('colors.gray.700');
+}
+
+.task-calendar .fc-toolbar-title {
+  font-size: theme('fontSize.xl');
+  font-weight: theme('fontWeight.semibold');
+}
+
+.task-calendar .fc-button {
+  padding: theme('spacing.2') theme('spacing.4');
+  font-size: theme('fontSize.sm');
+  border-radius: theme('borderRadius.md');
+}
+
+.task-calendar .fc-event {
+  border-radius: theme('borderRadius.md');
+  padding: theme('spacing.1') theme('spacing.2');
+  font-size: theme('fontSize.sm');
+  cursor: pointer;
+}
+
+.task-calendar .fc-daygrid-day {
+  min-height: 100px;
+}

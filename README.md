@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Management System
 
-## Getting Started
+## Overview
+This is a modern task management application built to help users organize, track, and manage their tasks efficiently.
 
-First, run the development server:
+## Features
+- Create, update, and delete tasks
+- Categorize tasks by priority and status
+- Intuitive user interface
+- State management using TypeScript and modern web technologies
 
+## Prerequisites
+- Node.js (v16 or later)
+- npm or Yarn
+
+## Technology Stack
+- Frontend: React
+- State Management: TypeScript
+- Styling: CSS/SCSS
+- Build Tool: Vite
+
+## Setup and Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/task-management-system.git
+cd task-management-system
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Run the Development Server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Build for Production
+```bash
+npm run build
+# or
+yarn build
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
+```
+task-management-system/
+├── src/
+│   ├── components/
+│   ├── store/
+│   ├── types/
+│   └── utils/
+├── public/
+├── package.json
+└── README.md
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Learn More
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
+Your Name - your.email@example.com
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Project Link: [https://github.com/Likith-Yadav/task-management](https://github.com/Likith-Yadav/task-management-system)
