@@ -144,13 +144,12 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-gray-900">
       <h1 className="text-2xl font-semibold text-white mb-8">Settings</h1>
 
       <div className="grid gap-8 md:grid-cols-2">
-        {/* Profile Settings */}
-        <div className="space-y-4 bg-gray-800/50 p-6 rounded-lg">
-          <h2 className="text-xl font-medium text-white">Profile Settings</h2>
+        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <h2 className="text-xl font-semibold text-white mb-4">Profile Settings</h2>
           <div className="space-y-4">
             <div>
               <label className="text-sm text-gray-400 block mb-1">Name</label>
@@ -159,6 +158,7 @@ export default function SettingsPage() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
                 disabled={isLoading}
+                className="bg-gray-900 border-gray-700 text-white"
               />
             </div>
             <div>
@@ -166,22 +166,21 @@ export default function SettingsPage() {
               <Input
                 value={email}
                 disabled
-                className="opacity-50"
+                className="opacity-50 bg-gray-900 border-gray-700 text-white"
               />
             </div>
             <Button
               onClick={handleUpdateProfile}
               disabled={isLoading}
-              className="w-full"
+              className="w-full bg-gray-700 hover:bg-gray-600 text-white"
             >
               {isLoading ? 'Updating...' : 'Update Profile'}
             </Button>
           </div>
         </div>
 
-        {/* Change Password */}
-        <div className="space-y-4 bg-gray-800/50 p-6 rounded-lg">
-          <h2 className="text-xl font-medium text-white">Change Password</h2>
+        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <h2 className="text-xl font-semibold text-white mb-4">Password Settings</h2>
           <div className="space-y-4">
             <div>
               <label className="text-sm text-gray-400 block mb-1">Current Password</label>
@@ -191,6 +190,7 @@ export default function SettingsPage() {
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Enter current password"
                 disabled={isLoading}
+                className="bg-gray-900 border-gray-700 text-white"
               />
             </div>
             <div>
@@ -201,6 +201,7 @@ export default function SettingsPage() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
                 disabled={isLoading}
+                className="bg-gray-900 border-gray-700 text-white"
               />
             </div>
             <div>
@@ -211,12 +212,13 @@ export default function SettingsPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm new password"
                 disabled={isLoading}
+                className="bg-gray-900 border-gray-700 text-white"
               />
             </div>
             <Button
               onClick={handleChangePassword}
               disabled={isLoading}
-              className="w-full"
+              className="w-full bg-gray-700 hover:bg-gray-600 text-white"
             >
               {isLoading ? 'Changing Password...' : 'Change Password'}
             </Button>
@@ -224,7 +226,6 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Logout Section - Replacing Danger Zone */}
       <div className="mt-12 border border-gray-800 rounded-lg p-6 bg-gray-800/50">
         <h2 className="text-xl font-medium text-white">Logout</h2>
         <p className="text-gray-400 mt-2 mb-4">

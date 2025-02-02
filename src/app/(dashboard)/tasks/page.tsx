@@ -83,7 +83,7 @@ export default function TasksPage() {
   }
 
   return (
-    <div className="flex flex-col h-full p-8">
+    <div className="flex flex-col h-full p-8 bg-gray-900">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-semibold text-white">Tasks</h1>
         <Button
@@ -94,9 +94,17 @@ export default function TasksPage() {
         </Button>
       </div>
 
+      <div className="rounded-xl border border-gray-800 bg-gray-800/50 overflow-hidden">
+        <TaskList
+          tasks={tasks}
+          onEdit={setEditingTask}
+          onDelete={handleDeleteTask}
+        />
+      </div>
+
       {(isFormOpen || editingTask) && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md border border-gray-700">
             <h2 className="text-xl font-semibold mb-4 text-white">
               {editingTask ? 'Edit Task' : 'Create New Task'}
             </h2>
@@ -111,14 +119,6 @@ export default function TasksPage() {
           </div>
         </div>
       )}
-
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
-        <TaskList
-          tasks={tasks}
-          onEdit={setEditingTask}
-          onDelete={handleDeleteTask}
-        />
-      </div>
     </div>
   );
 }

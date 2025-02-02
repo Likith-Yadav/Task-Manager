@@ -6,6 +6,7 @@ import { Sidebar } from './sidebar';
 import { UserMenu } from './user-menu';
 import { AiAssistant } from '@/components/chat/ai-assistant';
 import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/button';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,46 +14,31 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="min-h-screen bg-gray-900">
       <div className="flex">
-        <Sidebar
-          className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 lg:relative lg:translate-x-0 ${
-            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-
-        <div className="flex-1">
-          <header className={`sticky top-0 z-40 ${
-            isDark 
-              ? 'bg-gray-800/80 border-gray-800' 
-              : 'bg-white/80 border-gray-200'
-            } backdrop-blur-sm border-b`}>
-            <div className="flex h-16 items-center px-4">
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className={`rounded-md p-2 ${
-                  isDark
-                    ? 'text-gray-400 hover:bg-gray-700 hover:text-gray-300'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                } focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden`}
-              >
-                <span className="sr-only">Open sidebar</span>
-                <MenuIcon className="h-6 w-6" />
-              </button>
-
-              <div className="flex-1" />
-              <div className="flex items-center">
+        <Sidebar className="hidden lg:block w-64 fixed inset-y-0" />
+        <div className="lg:pl-64 flex-1">
+          <div className="flex flex-col min-h-screen">
+            <header className="h-16 border-b border-gray-800 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/80 sticky top-0 z-40">
+              <div className="flex items-center justify-between h-full px-4">
+                <div className="lg:hidden">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-400 hover:text-white"
+                    onClick={() => setIsSidebarOpen(true)}
+                  >
+                    <MenuIcon className="h-6 w-6" />
+                  </Button>
+                </div>
                 <UserMenu />
               </div>
-            </div>
-          </header>
-
-          <main className="flex-1">{children}</main>
+            </header>
+            <main className="flex-1 bg-gray-900">{children}</main>
+          </div>
         </div>
+        <AiAssistant />
       </div>
-
-      <AiAssistant />
     </div>
   );
 }

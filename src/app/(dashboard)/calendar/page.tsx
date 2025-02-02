@@ -30,12 +30,9 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="flex flex-col h-full p-8">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-semibold text-white">Calendar</h1>
-      </div>
-
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+    <div className="flex flex-col h-full p-8 bg-gray-900">
+      <h1 className="text-2xl font-semibold text-white mb-8">Calendar</h1>
+      <div className="bg-gray-800 rounded-lg shadow p-6">
         <TaskCalendar tasks={tasks} onTaskClick={handleTaskClick} />
       </div>
     </div>
