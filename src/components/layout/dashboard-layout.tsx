@@ -4,13 +4,10 @@ import { MenuIcon } from 'lucide-react';
 import { Sidebar } from './sidebar';
 import { UserMenu } from './user-menu';
 import { AiAssistant } from '@/components/chat/ai-assistant';
-import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { theme, setTheme } = useTheme();
-
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="flex">
