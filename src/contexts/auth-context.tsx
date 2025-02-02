@@ -20,7 +20,6 @@ import {
 import { auth } from '@/lib/firebase';
 import { getUser, createUser } from '@/lib/firebase-utils';
 import type { User } from '@/lib/models';
-import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   user: User | null;
@@ -36,7 +35,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     // Set persistence to LOCAL (survives browser restart)

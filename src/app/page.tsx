@@ -59,7 +59,7 @@ export default function Home() {
             </h1>
             
             <p className="mt-6 text-xl leading-8 text-gray-600 max-w-3xl mx-auto">
-              With TaskFlow's versatility, teams deliver better results faster while staying in-line with their company standards.
+              With TaskFlow&apos;s versatility, teams deliver better results faster while staying in-line with their company standards.
             </p>
             
             <div className="mt-10 flex items-center justify-center gap-x-6">

@@ -22,10 +22,11 @@ export default function SettingsPage() {
   const auth = getAuth();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  
-  // Initialize with empty strings instead of undefined
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (!user && !isLoading) {
@@ -46,11 +47,6 @@ export default function SettingsPage() {
       </div>
     );
   }
-
-  // Password states
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleUpdateProfile = async () => {
     if (!auth.currentUser) {

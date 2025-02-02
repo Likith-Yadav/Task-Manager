@@ -8,6 +8,7 @@ import * as z from 'zod';
 import { useAuth } from '@/contexts/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -17,7 +18,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { signIn, signInWithGoogle } = useAuth();
 
@@ -31,21 +32,25 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      setError('');
+      setIsLoading(true);
       await signIn(data.email, data.password);
       router.push('/dashboard');
-    } catch (err) {
-      setError('Invalid email or password');
+    } catch (error) {
+      toast.error('Invalid email or password');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
-      setError('');
+      setIsLoading(true);
       await signInWithGoogle();
       router.push('/dashboard');
-    } catch (err) {
-      setError('Failed to sign in with Google');
+    } catch (error) {
+      toast.error('Failed to sign in with Google');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +84,6 @@ export function LoginForm() {
               <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
           <Button 
             type="submit" 
             disabled={isSubmitting}
