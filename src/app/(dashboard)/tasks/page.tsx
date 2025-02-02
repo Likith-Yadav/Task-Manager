@@ -6,7 +6,22 @@ import { useTaskStore } from '@/store/task-store';
 import { TaskList } from '@/components/tasks/task-list';
 import { TaskForm } from '@/components/tasks/task-form';
 import { Button } from '@/components/ui/button';
-import type { Task } from '@/lib/models';
+import type { Task, TaskStatus, TaskPriority } from '@/lib/models';
+import { toast } from 'sonner';
+import { Timestamp } from 'firebase/firestore';
+
+interface ErrorResponse {
+  message: string;
+}
+
+interface TaskData {
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: TaskPriority;
+  dueDate?: Timestamp;
+  userId: string;
+}
 
 export default function TasksPage() {
   const { user } = useAuth();
@@ -20,24 +35,42 @@ export default function TasksPage() {
     }
   }, [user, fetchTasks]);
 
-  const handleCreateTask = async (data: any) => {
+  const handleCreateTask = async (data: TaskData) => {
     if (!user) return;
-    await addTask({
-      ...data,
-      userId: user.id,
-    });
-    setIsFormOpen(false);
+    try {
+      await addTask({
+        ...data,
+        userId: user.id,
+      });
+      setIsFormOpen(false);
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      console.error('Error:', err);
+      toast.error(err.message || 'An error occurred');
+    }
   };
 
-  const handleEditTask = async (data: any) => {
+  const handleEditTask = async (data: TaskData) => {
     if (!editingTask) return;
-    await editTask(editingTask.id, data);
-    setEditingTask(null);
+    try {
+      await editTask(editingTask.id, data);
+      setEditingTask(null);
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      console.error('Error:', err);
+      toast.error(err.message || 'An error occurred');
+    }
   };
 
   const handleDeleteTask = async (taskId: string) => {
     if (confirm('Are you sure you want to delete this task?')) {
-      await removeTask(taskId);
+      try {
+        await removeTask(taskId);
+      } catch (error: unknown) {
+        const err = error as ErrorResponse;
+        console.error('Error:', err);
+        toast.error(err.message || 'An error occurred');
+      }
     }
   };
 

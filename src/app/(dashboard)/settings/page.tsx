@@ -7,15 +7,19 @@ import { Input } from '@/components/ui/input';
 import { 
   updateProfile, 
   updatePassword, 
-  deleteUser, 
   EmailAuthProvider, 
   reauthenticateWithCredential, 
   getAuth,
 } from 'firebase/auth';
-import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc,updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+
+interface ErrorResponse {
+  code?: string;
+  message: string;
+}
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth();
@@ -56,13 +60,11 @@ export default function SettingsPage() {
     
     try {
       setIsLoading(true);
-      console.log('Updating profile for user:', auth.currentUser.uid);
       
       await updateProfile(auth.currentUser, {
         displayName: name
       });
 
-      // Update the user document in Firestore
       const userRef = doc(db, 'users', auth.currentUser.uid);
       await updateDoc(userRef, {
         name: name,
@@ -70,9 +72,10 @@ export default function SettingsPage() {
       });
 
       toast.success('Profile updated successfully');
-    } catch (error: any) {
-      console.error('Profile update error:', error);
-      toast.error(error.message || 'Failed to update profile');
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      console.error('Profile update error:', err);
+      toast.error(err.message || 'Failed to update profile');
     } finally {
       setIsLoading(false);
     }
@@ -96,9 +99,7 @@ export default function SettingsPage() {
 
     try {
       setIsLoading(true);
-      console.log('Changing password for user:', auth.currentUser.uid);
 
-      // Re-authenticate user before changing password
       const credential = EmailAuthProvider.credential(
         auth.currentUser.email,
         currentPassword
@@ -107,18 +108,18 @@ export default function SettingsPage() {
       await reauthenticateWithCredential(auth.currentUser, credential);
       await updatePassword(auth.currentUser, newPassword);
       
-      // Clear form
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
       
       toast.success('Password changed successfully');
-    } catch (error: any) {
-      console.error('Password change error:', error);
-      if (error.code === 'auth/wrong-password') {
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      console.error('Password change error:', err);
+      if (err.code === 'auth/wrong-password') {
         toast.error('Current password is incorrect');
       } else {
-        toast.error(error.message || 'Failed to change password');
+        toast.error(err.message || 'Failed to change password');
       }
     } finally {
       setIsLoading(false);
@@ -129,14 +130,13 @@ export default function SettingsPage() {
     try {
       setIsLoading(true);
       await signOut();
-      // Force a small delay to ensure signOut completes
       setTimeout(() => {
         router.push('/');
-        // Force a page refresh to clear any cached states
         window.location.href = '/';
       }, 100);
-    } catch (error: any) {
-      console.error('Logout error:', error);
+    } catch (error: unknown) {
+      const err = error as ErrorResponse;
+      console.error('Logout error:', err);
       toast.error('Failed to logout');
     } finally {
       setIsLoading(false);

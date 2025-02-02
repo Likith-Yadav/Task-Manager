@@ -8,6 +8,7 @@ import * as z from 'zod';
 import { useAuth } from '@/contexts/auth-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 const signUpSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -22,9 +23,9 @@ const signUpSchema = z.object({
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export function SignUpForm() {
-  const [error, setError] = useState<string>('');
   const router = useRouter();
   const { signUp, signInWithGoogle } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -36,21 +37,26 @@ export function SignUpForm() {
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {
-      setError('');
+      setIsLoading(true);
       await signUp(data.email, data.password, data.name);
       router.push('/dashboard');
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    if (isLoading) return;
     try {
-      setError('');
+      setIsLoading(true);
       await signInWithGoogle();
       router.push('/dashboard');
-    } catch (err) {
-      setError('Failed to sign up with Google');
+    } catch {
+      toast.error('Failed to sign in with Google');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,7 +114,6 @@ export function SignUpForm() {
               <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
             )}
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
           <Button 
             type="submit" 
             disabled={isSubmitting}

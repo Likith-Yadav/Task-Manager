@@ -25,17 +25,19 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    if (isLoading) return;
+    
     try {
       setIsLoading(true);
       await signIn(data.email, data.password);
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Invalid email or password');
     } finally {
       setIsLoading(false);
@@ -43,11 +45,13 @@ export function LoginForm() {
   };
 
   const handleGoogleSignIn = async () => {
+    if (isLoading) return;
+
     try {
       setIsLoading(true);
       await signInWithGoogle();
       router.push('/dashboard');
-    } catch (error) {
+    } catch {
       toast.error('Failed to sign in with Google');
     } finally {
       setIsLoading(false);
@@ -86,10 +90,10 @@ export function LoginForm() {
           </div>
           <Button 
             type="submit" 
-            disabled={isSubmitting}
+            disabled={isLoading}
             className="h-11 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg"
           >
-            {isSubmitting ? 'Signing in...' : 'Sign In with Email'}
+            {isLoading ? 'Signing in...' : 'Sign In with Email'}
           </Button>
         </div>
       </form>

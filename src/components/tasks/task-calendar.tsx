@@ -3,9 +3,16 @@
 import { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { format } from 'date-fns';
 import type { Task } from '@/lib/models';
 import { Timestamp } from 'firebase/firestore';
+
+interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  priority: 'low' | 'medium' | 'high';
+}
 
 interface TaskCalendarProps {
   tasks: Task[];
@@ -13,7 +20,7 @@ interface TaskCalendarProps {
 }
 
 export function TaskCalendar({ tasks, onTaskClick }: TaskCalendarProps) {
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
 
   useEffect(() => {
     const taskEvents = tasks
@@ -23,29 +30,14 @@ export function TaskCalendar({ tasks, onTaskClick }: TaskCalendarProps) {
         return {
           id: task.id,
           title: task.title,
-          start: format(dueDate, 'yyyy-MM-dd'),
-          backgroundColor: getTaskColor(task.priority, task.status),
-          borderColor: getTaskColor(task.priority, task.status),
-          textColor: '#ffffff',
+          start: dueDate,
+          end: dueDate,
+          priority: task.priority as 'low' | 'medium' | 'high',
         };
       });
 
     setEvents(taskEvents);
   }, [tasks]);
-
-  const getTaskColor = (priority: string, status: string) => {
-    if (status === 'completed') return '#22c55e'; // green-500
-    switch (priority) {
-      case 'high':
-        return '#ef4444'; // red-500
-      case 'medium':
-        return '#f97316'; // orange-500
-      case 'low':
-        return '#3b82f6'; // blue-500
-      default:
-        return '#6b7280'; // gray-500
-    }
-  };
 
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow task-calendar">

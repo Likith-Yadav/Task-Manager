@@ -9,8 +9,8 @@ import { Timestamp } from 'firebase/firestore';
 import { useAuth } from '@/contexts/auth-context';
 
 interface TaskFormProps {
-  initialData?: Task;
-  onSubmit: (data: Omit<Task, 'id' | 'createdAt' | 'updatedAt'> & { userId: string }) => void;
+  initialData?: Partial<Task>;
+  onSubmit: (data: Task) => void;
   onCancel: () => void;
 }
 

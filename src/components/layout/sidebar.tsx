@@ -3,14 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import {
-  LayoutDashboard,
-  ListTodo,
-  Calendar,
-  FolderKanban,
-  Tags,
-  Settings,
+import { 
+  LayoutDashboard, 
+  ListTodo, 
+  Calendar, 
+  Settings, 
   X,
+  FolderKanban
 } from 'lucide-react';
 
 interface SidebarProps {

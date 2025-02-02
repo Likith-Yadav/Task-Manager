@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Search, Filter, SortAsc, SortDesc } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { TaskPriority, TaskStatus } from '@/lib/models';

@@ -5,7 +5,6 @@ import { useAuth } from '@/contexts/auth-context';
 import { useTaskStore } from '@/store/task-store';
 import { useProjectStore } from '@/store/project-store';
 import { Button } from '@/components/ui/button';
-import { TaskPriority } from '@/lib/models';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 

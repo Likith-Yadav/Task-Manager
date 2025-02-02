@@ -27,8 +27,8 @@ const convertTimestamps = (data: DocumentData) => {
   return result;
 };
 
-const convertToTimestamp = (date: Date | undefined): Timestamp | undefined => {
-  return date ? Timestamp.fromDate(date) : undefined;
+export const convertToTimestamp = (date: Date) => {
+  return Timestamp.fromDate(date);
 };
 
 // Users
