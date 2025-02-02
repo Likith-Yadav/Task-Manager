@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
 import { Sidebar } from './sidebar';
 import { UserMenu } from './user-menu';
@@ -11,10 +10,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
 
   return (
     <div className="min-h-screen bg-gray-900">
