@@ -7,11 +7,19 @@ import { useProjectStore } from '@/store/project-store';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
   const { user } = useAuth();
   const { tasks = [], loading: tasksLoading, fetchTasks } = useTaskStore();
   const { projects = [], loading: projectsLoading, fetchProjects } = useProjectStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/login');
+    }
+  }, [user, router]);
 
   useEffect(() => {
     if (user) {
@@ -19,6 +27,14 @@ export default function DashboardPage() {
       fetchProjects(user.id);
     }
   }, [user, fetchTasks, fetchProjects]);
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] text-gray-400">
+        Loading...
+      </div>
+    );
+  }
 
   if (tasksLoading || projectsLoading) {
     return (
@@ -29,39 +45,28 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col h-full p-8">
-      {/* Stats Overview */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:bg-gray-900/80 transition-colors">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h2 className="text-sm font-medium text-gray-400">Total Tasks</h2>
-          </div>
-          <div className="text-2xl font-bold text-white">{tasks?.length || 0}</div>
+    <div className="flex flex-col h-full p-8 bg-gray-900">
+      <h1 className="text-2xl font-semibold text-white mb-8">Dashboard</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-gray-800 p-6 rounded-lg shadow">
+          <h2 className="text-lg font-medium text-white">Total Tasks</h2>
+          <p className="text-3xl font-bold text-indigo-500 mt-2">{tasks?.length || 0}</p>
         </div>
-
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:bg-gray-900/80 transition-colors">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h2 className="text-sm font-medium text-gray-400">Active Projects</h2>
-          </div>
-          <div className="text-2xl font-bold text-white">{projects?.length || 0}</div>
+        
+        <div className="bg-gray-800 p-6 rounded-lg shadow">
+          <h2 className="text-lg font-medium text-white">Active Projects</h2>
+          <p className="text-3xl font-bold text-indigo-500 mt-2">{projects?.length || 0}</p>
         </div>
-
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:bg-gray-900/80 transition-colors">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h2 className="text-sm font-medium text-gray-400">Completed Tasks</h2>
-          </div>
-          <div className="text-2xl font-bold text-white">
-            {tasks?.filter((task) => task.status === 'completed')?.length || 0}
-          </div>
+        
+        <div className="bg-gray-800 p-6 rounded-lg shadow">
+          <h2 className="text-lg font-medium text-white">Completed Tasks</h2>
+          <p className="text-3xl font-bold text-indigo-500 mt-2">{tasks?.filter((task) => task.status === 'completed')?.length || 0}</p>
         </div>
-
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:bg-gray-900/80 transition-colors">
-          <div className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <h2 className="text-sm font-medium text-gray-400">Pending Tasks</h2>
-          </div>
-          <div className="text-2xl font-bold text-white">
-            {tasks?.filter((task) => task.status !== 'completed')?.length || 0}
-          </div>
+        
+        <div className="bg-gray-800 p-6 rounded-lg shadow">
+          <h2 className="text-lg font-medium text-white">Pending Tasks</h2>
+          <p className="text-3xl font-bold text-indigo-500 mt-2">{tasks?.filter((task) => task.status !== 'completed')?.length || 0}</p>
         </div>
       </div>
 
